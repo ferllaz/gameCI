@@ -14,13 +14,14 @@ def test_product_creation():
     assert product.name == "Phone"
 
 @pytest.mark.django_db
-def test_product_serializer():
+def test_product_serializer_description():
 
     product = Product.objects.create(
         name="Phone",
+        description="Apple smartphone",
         price=50000
     )
 
     serializer = ProductSerializer(product)
 
-    assert serializer.data["name"] == "Phone"
+    assert serializer.data["description"] == "Apple smartphone"
