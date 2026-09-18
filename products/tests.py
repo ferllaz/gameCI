@@ -1,27 +1,46 @@
 import pytest
 
-from .models import Product
-from products.serializers import ProductSerializer
+from .models import Game
+from .serializers import GameSerializer
+from rest_framework.test import APIClient
 
 @pytest.mark.django_db
-def test_product_creation():
+def test_game_creation():
 
-    product = Product.objects.create(
-        name="Phone",
-        price=50000
+    game = Game.objects.create(
+        name="Minecraft",
+        genre="Sandbox",
+        price=14999
     )
 
-    assert product.name == "Phone"
+    assert game.genre == "Sandbox"
 
 @pytest.mark.django_db
-def test_product_serializer_description():
+def test_game_serializer():
 
-    product = Product.objects.create(
-        name="Phone",
-        description="Apple smartphone",
-        price=50000
+    game = Game.objects.create(
+        name="Minecraft",
+        genre="Sandbox",
+        price=14999
     )
 
-    serializer = ProductSerializer(product)
+    serializer = GameSerializer(game)
 
-    assert serializer.data["description"] == "Apple smartphone"
+    assert serializer.data["genre"] == "Sandbox"
+
+@pytest.mark.django_db
+def test_get_games():
+
+    Game.objects.create(
+        name="Minecraft",
+        genre="Sandbox",
+        price=14999
+    )
+
+    client = APIClient()
+
+    response = client.get("/api/games/")
+
+    assert response.status_code == 200
+
+    assert response.data[0]["name"] == "Minecraft"

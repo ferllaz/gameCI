@@ -1,9 +1,9 @@
-from rest_framework.generics import ListCreateAPIView
+from rest_framework import generics
 
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Game
+from .serializers import GameSerializer
 
 
-class ProductListCreateView(ListCreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+class GameListCreateView(generics.ListCreateAPIView):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer

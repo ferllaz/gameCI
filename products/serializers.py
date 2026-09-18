@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Product
+from .models import Game
 
-class ProductSerializer(serializers.ModelSerializer):
+
+class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Product
+        model = Game
         fields = "__all__"
